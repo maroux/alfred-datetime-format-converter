@@ -4,11 +4,11 @@ import alfred
 import calendar
 from delorean import utcnow, parse, epoch
 
-def process(query_str):
+def process(query_str, default_timezone):
     """ Entry point """
     value = parse_query_value(query_str)
     if value is not None:
-        results = alfred_items_for_value(value)
+        results = alfred_items_for_value(value, default_timezone)
         xml = alfred.xml(results) # compiles the XML answer
         alfred.write(xml) # writes the XML back to Alfred
 
@@ -31,7 +31,7 @@ def parse_query_value(query_str):
         d = None
     return d
 
-def alfred_items_for_value(value):
+def alfred_items_for_value(value, default_timezone):
     """
     Given a delorean datetime object, return a list of
     alfred items for each of the results
@@ -67,6 +67,8 @@ def alfred_items_for_value(value):
         ("%Y-%m-%dT%H:%M:%S%z", ''),
     ]
     for format, description in formats:
+        if '%z' in format and default_timezone:
+            value = value.shift(default_timezone)
         item_value = value.datetime.strftime(format)
         results.append(alfred.Item(
             title=str(item_value),
@@ -86,4 +88,8 @@ if __name__ == "__main__":
         query_str = alfred.args()[0]
     except IndexError:
         query_str = None
-    process(query_str)
+    try:
+        default_timezone = alfred.args()[1]
+    except IndexError:
+        default_timezone = None
+    process(query_str, default_timezone)

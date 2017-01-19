@@ -7,7 +7,7 @@ Simply type "df" followed by: "now", a UTC unix timestamp, or a formatted dateti
 
 This will present you with the parsed date in various formats ready to copy to your clipboard.
 
-[Download](https://raw.github.com/mwaterfall/alfred-datetime-format-converter/master/download/DatetimeFormatConverter.alfredworkflow)
+[Download](https://raw.github.com/maroux/alfred-datetime-format-converter/master/download/DatetimeFormatConverter.alfredworkflow)
 
 [Alfred Forum Topic](http://www.alfredforum.com/topic/1558-datetime-format-converter-convert-between-unix-timestamps-and-datetime-strings/)
 
