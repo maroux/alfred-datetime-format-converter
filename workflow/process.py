@@ -23,7 +23,10 @@ def parse_query_value(query_str):
             try:
                 d = epoch(float(query_str))
             except ValueError:
-                d = parse(str(query_str))
+                try:
+                    d = epoch(float(query_str)/1000.0)
+                except:
+                    d = parse(str(query_str))
     except (TypeError, ValueError):
         d = None
     return d
